@@ -47,10 +47,11 @@ jobs:
       - name: Push to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: release-${{ env.RELEASE }}
+          tag_name: release-arm64-${{ env.RELEASE }}
           name: Release arm64 ${{ env.RELEASE }}
           files: |
             Devuan.zip
+            rootfs.tar.gz
           preserve_order: true
           make_latest: false
 
