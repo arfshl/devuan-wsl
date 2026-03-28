@@ -2,6 +2,11 @@ name: "Build amd64"
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ 'main' ]
+    paths:
+      - "src/.github/workflows/build-amd64.yml"
+
 
 permissions:
   contents: write  
@@ -16,7 +21,7 @@ jobs:
           fetch-depth: 0
       - name: Install Needed Dependencies
         run: |
-          sudo apt update && sudo apt install -yq curl unzip zip
+          sudo apt update && sudo apt install -yq curl bsdtar
           curl -L -o /tmp/mmdebstrap.deb http://ftp.us.debian.org/debian/pool/main/m/mmdebstrap/mmdebstrap_1.5.7-3_all.deb
           sudo apt install -yq /tmp/mmdebstrap.deb
           curl -L -o /tmp/keyring.deb http://ftp.us.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2025.1_all.deb
@@ -42,8 +47,8 @@ jobs:
       - name: Combine wsldl and rootfs
         run: |
           curl -L https://github.com/yuk7/wsldl/releases/download/26032000/icons.zip -o icons.zip
-          unzip icons.zip
-          zip Devuan.zip rootfs.tar.gz Devuan.exe
+          bsdtar -xf icons.zip
+          bsdtar -cf Devuan.zip rootfs.tar.gz Devuan.exe
       - name: Push to release
         uses: softprops/action-gh-release@v2
         with:
