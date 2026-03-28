@@ -5,7 +5,7 @@ on:
   push:
     branches: [ 'main' ]
     paths:
-      - "src/.github/workflows/build-arm64.yml"
+      - ".github/workflows/build-arm64.yml"
 
 permissions:
   contents: write  

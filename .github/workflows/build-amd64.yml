@@ -5,7 +5,7 @@ on:
   push:
     branches: [ 'main' ]
     paths:
-      - "src/.github/workflows/build-amd64.yml"
+      - ".github/workflows/build-amd64.yml"
 
 
 permissions:
