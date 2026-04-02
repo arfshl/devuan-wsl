@@ -5,7 +5,8 @@ on:
   push:
     branches: [ 'main' ]
     paths:
-      - ".github/workflows/build-arm64.yml"
+      - "build-script/build.sh"
+
 
 permissions:
   contents: write  
@@ -18,40 +19,14 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Install Needed Dependencies
+      - name: Run build scripts
         run: |
-          sudo apt update && sudo apt install -yq curl libarchive-tools
-          curl -L -o /tmp/mmdebstrap.deb http://ftp.us.debian.org/debian/pool/main/m/mmdebstrap/mmdebstrap_1.5.7-3_all.deb
-          sudo apt install -yq /tmp/mmdebstrap.deb
-          curl -L -o /tmp/keyring.deb http://ftp.us.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2025.1_all.deb
-          sudo apt install -yq /tmp/keyring.deb
-          curl -L -o /tmp/devuankey.deb http://deb.devuan.org/merged/pool/DEVUAN/main/d/devuan-keyring/devuan-keyring_2025.08.09_all.deb
-          sudo apt install -yq /tmp/devuankey.deb
-      - name: Build rootfs
-        run: |
-          dist_version="$RELEASE"
-          sudo mmdebstrap \
-          --arch=arm64 \
-          --variant=minbase \
-          --components="main,contrib,non-free" \
-          --include=ca-certificates,locales,devuan-keyring \
-          --format=tar \
-          ${dist_version} \
-          rootfs.tar.gz \
-          "deb http://deb.devuan.org/merged ${dist_version} main contrib non-free" \
-          "deb http://deb.devuan.org/merged ${dist_version}-updates main contrib non-free" \
-          "deb http://deb.devuan.org/merged ${dist_version}-security main contrib non-free"
-
-      - name: Combine wsldl and rootfs
-        run: |
-          curl -L https://github.com/yuk7/wsldl/releases/download/26032000/icons_arm64.zip -o icons.zip
-          bsdtar -xf icons.zip
-          bsdtar -a -cf Devuan.zip rootfs.tar.gz Devuan.exe
+          sudo bash ./build-script/build.sh
       - name: Push to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: release-arm64-${{ env.RELEASE }}
-          name: Release arm64 ${{ env.RELEASE }}
+          tag_name: release-arm64-${{ steps.build.outputs.dist_version }}
+          name: Release arm64 ${{ steps.build.outputs.dist_version }}
           files: |
             Devuan.zip
             rootfs.tar.gz
@@ -60,4 +35,3 @@ jobs:
 
 env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      RELEASE: excalibur
