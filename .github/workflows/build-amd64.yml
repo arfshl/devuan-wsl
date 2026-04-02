@@ -25,8 +25,8 @@ jobs:
       - name: Push to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: release-amd64-${{ steps.build.outputs.dist_version }}
-          name: Release amd64 ${{ steps.build.outputs.dist_version }}
+          tag_name: release-amd64-${{ env.dist_version }}
+          name: Release amd64 ${{ env.dist_version }}
           files: |
             Devuan.zip
             rootfs.tar.gz
