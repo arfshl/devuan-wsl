@@ -74,3 +74,11 @@ Usage :
 >Devuan.exe clean
 
 ```
+
+### Other WSL distributions
+
+[![AlpineWSL-edge](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=alpinewsl-edge&theme=transparent)](https://github.com/arfshl/alpinewsl-edge)
+[![VoidWSL](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=voidwsl&theme=transparent)](https://https://github.com/arfshl/voidwsl)
+[![ubuntu-latest-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=ubuntu-latest-wsl&theme=transparent)](https://github.com/arfshl/ubuntu-latest-wsl)
+[![debianwsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=debianwsl&theme=transparent)](https://github.com/arfshl/debianwsl)
+[![trisquelwsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=trisquelwsl&theme=transparent)](https://github.com/arfshl/trisquelwsl)
