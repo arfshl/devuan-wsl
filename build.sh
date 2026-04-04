@@ -29,7 +29,7 @@ sudo mmdebstrap \
     --arch=$ARCH \
     --variant=minbase \
     --components="main,contrib,non-free" \
-    --include=ca-certificates,locales,devuan- \
+    --include=ca-certificates,locales,devuan-keyring \
     --format=tar \
     --customize-hook="chroot \$1 sed -i 's/^# \(en_US.UTF-8\)/\1/' /etc/locale.gen" \
     --customize-hook="chroot \$1 /bin/bash -c 'DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales'" \
