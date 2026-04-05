@@ -34,7 +34,7 @@ jobs:
             devuan.zip
             rootfs.tar.gz
           preserve_order: true
-          make_latest: true
+          make_latest: false
 
 env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
