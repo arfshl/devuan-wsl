@@ -25,7 +25,7 @@ Devuan on WSL
 [![alpine-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=alpine-wsl&theme=transparent)](https://github.com/arfshl/alpine-wsl)
 [![void-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=void-wsl&theme=transparent)](https://github.com/arfshl/void-wsl)
 [![ubuntu-latest-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=ubuntu-latest-wsl&theme=transparent)](https://github.com/arfshl/ubuntu-latest-wsl)
-[![debian-testing-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=debian-testing-wsl&theme=transparent)](https://github.com/arfshl/debian-testing-wsl)
+[![debian-rolling-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=debian-rolling-wsl&theme=transparent)](https://github.com/arfshl/debian-rolling-wsl)
 [![trisquel-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=trisquel-wsl&theme=transparent)](https://github.com/arfshl/trisquel-wsl)
 
 
