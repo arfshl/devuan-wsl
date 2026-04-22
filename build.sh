@@ -26,7 +26,7 @@ sudo apt install -yq /tmp/devuankey.deb
 
 # start build with mmdebstrap and sprays some WD-40 to get rid of rust on coreutils
 dist_version="$RELEASE"
-$components="main,contrib,non-free"
+export $components="main,contrib,non-free"
 sudo mmdebstrap \
     --arch=$ARCH \
     --variant=minbase \
