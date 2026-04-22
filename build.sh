@@ -26,19 +26,19 @@ sudo apt install -yq /tmp/devuankey.deb
 
 # start build with mmdebstrap and sprays some WD-40 to get rid of rust on coreutils
 dist_version="$RELEASE"
-export components="main,contrib,non-free"
+
 sudo mmdebstrap \
     --arch=$ARCH \
     --variant=minbase \
-    --components="$components" \
+    --components="main,contrib,non-free" \
     --include=locales,passwd,ca-certificates,sudo,dbus,mesa-utils \
     --format=directory \
     ${dist_version} \
     devuan \
-    "deb http://deb.devuan.org/merged ${dist_version} $components" \
-    "deb http://deb.devuan.org/merged ${dist_version}-updates $components" \
-    "deb http://deb.devuan.org/merged ${dist_version}-security $components" \
-    "deb http://deb.devuan.org/merged ${dist_version}-backports $components"
+    "deb http://deb.devuan.org/merged ${dist_version} main contrib non-free \
+    "deb http://deb.devuan.org/merged ${dist_version}-updates main contrib non-free" \
+    "deb http://deb.devuan.org/merged ${dist_version}-security main contrib non-free" \
+    "deb http://deb.devuan.org/merged ${dist_version}-backports main contrib non-free"
 
 cat <<-EOF | sudo unshare -mpf bash -e -
 sudo mount --bind /dev ./devuan/dev
