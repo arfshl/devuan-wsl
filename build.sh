@@ -35,7 +35,7 @@ sudo chroot ./devuan apt update
 #sudo chroot ./devuan apt purge -yq --allow-remove-essential rust-coreutils
 #sudo chroot ./devuan apt install -yq coreutils-from-gnu
 #sudo chroot ./devuan apt install -yq gnu-coreutils
-sudo chroot ./devuan apt install -yq locales passwd ca-certificates sudo libpam-systemd dbus systemd mesa-utils systemd-sysv
+sudo chroot ./devuan apt install -yq locales passwd ca-certificates sudo dbus mesa-utils
 sudo chroot ./devuan apt clean
 
 sudo chroot ./devuan sed -i 's/^# \(en_US.UTF-8\)/\1/' /etc/locale.gen
