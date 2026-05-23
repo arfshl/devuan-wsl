@@ -1,6 +1,8 @@
 # Devuan WSL
 Devuan on WSL
 
+Based on [Devuan docker image](https://hub.docker.com/r/arfshl/devuan)
+
 [![Build](https://github.com/arfshl/devuan-wsl/actions/workflows/build.yml/badge.svg)](https://github.com/arfshl/devuan-wsl/actions/workflows/build.yml)
 
 ![screenshot](https://github.com/arfshl/devuan-wsl/raw/main/screenshot.png)
@@ -24,8 +26,8 @@ Devuan on WSL
 
 [![alpine-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=alpine-wsl&theme=transparent)](https://github.com/arfshl/alpine-wsl)
 [![void-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=void-wsl&theme=transparent)](https://github.com/arfshl/void-wsl)
-[![ubuntu-latest-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=ubuntu-latest-wsl&theme=transparent)](https://github.com/arfshl/ubuntu-latest-wsl)
+[![ubuntu-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=ubuntu-wsl&theme=transparent)](https://github.com/arfshl/ubuntu-wsl)
 [![debian-rolling-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=debian-rolling-wsl&theme=transparent)](https://github.com/arfshl/debian-rolling-wsl)
-[![trisquel-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=trisquel-wsl&theme=transparent)](https://github.com/arfshl/trisquel-wsl)
+[![devuan-wsl](https://github-readme-stats-fast.vercel.app/api/pin/?username=arfshl&repo=devuan-wsl&theme=transparent)](https://github.com/arfshl/devuan-wsl)
 
 
