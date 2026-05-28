@@ -3,7 +3,7 @@ name: "Build"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 1 * * 0"
+    - cron: "0 0 * * 0"
   push:
     branches:
       - 'main'
@@ -64,8 +64,8 @@ jobs:
       - name: Release stable
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: latest
-          name: Release latest
+          tag_name: ${{ needs.build-amd64.outputs.RELEASE }}
+          name: Release ${{ needs.build-amd64.outputs.RELEASE }}
           files: |
             devuan-arm64.wsl
             devuan-amd64.wsl

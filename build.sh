@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# export the env
+export RELEASE=$(curl -s http://deb.devuan.org/merged/dists/stable/Release | grep "Codename" | cut -d' ' -f2)
 ARCH=$(uname -m)
 case "$ARCH" in
     x86_64) ARCH=amd64 ;;
@@ -11,36 +13,40 @@ case "$ARCH" in
         exit 1
         ;;
 esac
+echo "RELEASE=$RELEASE" >> "$GITHUB_OUTPUT"
 echo "ARCH=$ARCH" >> "$GITHUB_OUTPUT"
 
 # install depedencies
-manifest=$(docker manifest inspect arfshl/devuan:latest)
-# Fetch image digest
-digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$ARCH\") | .digest")
-# Pull and Export image
-docker pull "arfshl/devuan:latest@${digest}"
-docker export $(docker create "arfshl/devuan:latest@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/devuan.tar.xz"
+curl -L -o /tmp/mmdebstrap.deb http://ftp.us.debian.org/debian/pool/main/m/mmdebstrap/mmdebstrap_1.5.7-3_all.deb
+sudo apt install -yq /tmp/mmdebstrap.deb
+curl -L -o /tmp/keyring.deb http://ftp.us.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2025.1_all.deb
+sudo apt install -yq /tmp/keyring.deb
+curl -L -o /tmp/devuankey.deb http://deb.devuan.org/merged/pool/DEVUAN/main/d/devuan-keyring/devuan-keyring_2025.08.09_all.deb
+sudo apt install -yq /tmp/devuankey.deb
 
-mkdir -p ./devuan
-sudo tar -xJpf devuan.tar.xz -C ./devuan
+# start build with mmdebstrap and sprays some WD-40 to get rid of rust on coreutils
+dist_version="$RELEASE"
+
+sudo mmdebstrap \
+    --arch=$ARCH \
+    --variant=minbase \
+    --components="main,contrib,non-free" \
+    --include=locales,passwd,ca-certificates,sudo,dbus,mesa-utils \
+    --format=directory \
+    ${dist_version} \
+    devuan \
+    "deb http://deb.devuan.org/merged ${dist_version} main contrib non-free" \
+    "deb http://deb.devuan.org/merged ${dist_version}-updates main contrib non-free" \
+    "deb http://deb.devuan.org/merged ${dist_version}-security main contrib non-free" \
+    "deb http://deb.devuan.org/merged ${dist_version}-backports main contrib non-free"
+
 cat <<-EOF | sudo unshare -mpf bash -e -
 sudo mount --bind /dev ./devuan/dev
 sudo mount --bind /proc ./devuan/proc
 sudo mount --bind /sys ./devuan/sys
-sudo rm -f ./devuan/etc/resolv.conf
-sudo echo "nameserver 1.1.1.1" >> ./devuan/etc/resolv.conf
-
-sudo chroot ./devuan apt update
-#sudo chroot ./devuan apt purge -yq --allow-remove-essential coreutils-from-uutils
-#sudo chroot ./devuan apt purge -yq --allow-remove-essential rust-coreutils
-#sudo chroot ./devuan apt install -yq coreutils-from-gnu
-#sudo chroot ./devuan apt install -yq gnu-coreutils
-sudo chroot ./devuan apt install -yq locales passwd ca-certificates sudo dbus mesa-utils
-sudo chroot ./devuan apt clean
-
+sudo echo 'nameserver 1.1.1.1' >> ./devuan/etc/resolv.conf
 sudo chroot ./devuan sed -i 's/^# \(en_US.UTF-8\)/\1/' /etc/locale.gen
 sudo chroot ./devuan /bin/bash -c 'DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales'
-
 sudo rm -rf ./devuan/var/lib/apt/lists/*
 sudo rm -rf ./devuan/var/tmp*
 sudo rm -rf ./devuan/tmp*
@@ -49,8 +55,6 @@ EOF
 sudo cp ./wslconf/oobe.sh ./devuan/etc/oobe.sh
 sudo chmod 644 ./devuan/etc/oobe.sh
 sudo chmod +x ./devuan/etc/oobe.sh
-sudo cp ./wslconf/oobe.sh ./devuan/etc/wsl.conf
-sudo chmod 644 ./devuan/etc/wsl.conf
 sudo cp ./wslconf/wsl-distribution.conf ./devuan/etc/wsl-distribution.conf
 sudo chmod 644 ./devuan/etc/wsl-distribution.conf
 sudo mkdir -p ./devuan/usr/lib/wsl/
