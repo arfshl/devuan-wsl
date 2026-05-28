@@ -1,8 +1,6 @@
 # Devuan WSL
 Devuan on WSL
 
-Based on [Devuan docker image](https://hub.docker.com/r/arfshl/devuan)
-
 [![Build](https://github.com/arfshl/devuan-wsl/actions/workflows/build.yml/badge.svg)](https://github.com/arfshl/devuan-wsl/actions/workflows/build.yml)
 
 ![screenshot](https://github.com/arfshl/devuan-wsl/raw/main/screenshot.png)
