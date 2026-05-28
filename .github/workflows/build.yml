@@ -65,7 +65,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.build-amd64.outputs.RELEASE }}
-          name: Release ${{ needs.build-amd64.outputs.RELEASE }}
+          name: ${{ needs.build-amd64.outputs.RELEASE }}
           files: |
             devuan-arm64.wsl
             devuan-amd64.wsl
